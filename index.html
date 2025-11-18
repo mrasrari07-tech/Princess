@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Princess Day — Kulsum 👑💜</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #f8f4ff;
+  --paper: #fff9fe;
+  --text: #392041;
+  --muted: #a88db9;
+  --accent: #f78acb;
+  --accent2: #a78bfa;
+}
+
+/* Reset */
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  min-height:100vh;
+  background: radial-gradient(circle at top, #f5ddff 0, #f8f4ff 40%, #f7e9ff 100%);
+  font-family:'Poppins',sans-serif;
+  color:var(--text);
+  overflow-x:hidden;
+}
+
+/* START SCREEN */
+.overlay{
+  position:fixed;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  background: radial-gradient(circle at top, #fbdcff, #f3d5ff, #fdf2ff);
+  z-index:999;
+}
+.overlay-card{
+  width:92%;max-width:380px;
+  background:rgba(255,255,255,0.94);
+  padding:26px 22px;
+  text-align:center;
+  border-radius:25px;
+  box-shadow:0 18px 48px rgba(129,76,162,0.35);
+  backdrop-filter:blur(12px);
+}
+.overlay-title{
+  font-family:'Great Vibes',cursive;
+  font-size:2.4rem;
+  color:var(--accent2);
+  margin-bottom:10px;
+}
+.overlay-sub{
+  font-size:0.9rem;
+  color:var(--muted);
+  line-height:1.5;
+}
+.btn-primary{
+  margin-top:18px;
+  padding:11px 22px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff;border:none;border-radius:999px;
+  font-weight:600;font-size:0.96rem;
+  cursor:pointer;transition:.25s;
+  box-shadow:0 10px 28px rgba(167,139,250,0.55);
+}
+.overlay-note{
+  margin-top:8px;
+  font-size:0.78rem;
+  color:var(--muted);
+}
+
+/* FLOATING EMOJIS */
+#floatLayer{
+  position:fixed;inset:0;pointer-events:none;overflow:hidden;
+}
+.float{
+  position:absolute;font-size:1.25rem;opacity:.8;
+  animation:float 11s linear infinite;
+}
+@keyframes float{
+ 0%{transform:translateY(120vh);opacity:0;}
+ 20%{opacity:1;}
+ 100%{transform:translateY(-20vh) translateX(40px);opacity:0;}
+}
+
+/* PAGE */
+.page{
+  max-width:900px;margin:auto;padding:20px 16px 50px;
+}
+
+/* SCENE */
+.scene{
+  background:var(--paper);
+  border-radius:22px;
+  padding:18px 16px;
+  margin-top:18px;
+  box-shadow:0 14px 34px rgba(117,67,142,0.16);
+  opacity:0;transform:translateY(24px);transition:0.8s;
+}
+.scene.visible{opacity:1;transform:translateY(0);}
+
+/* TITLES */
+.hero-title{
+  font-family:'Great Vibes',cursive;
+  font-size:2.3rem;
+  color:var(--accent2);
+}
+.hero-sub{
+  margin-top:6px;font-size:0.9rem;color:var(--muted);
+}
+
+/* COUNTDOWN */
+.countdown-bar{
+  background:#f4e6ff;margin-top:12px;padding:10px;border-radius:20px;
+}
+.countdown{display:flex;gap:10px;flex-wrap:wrap;font-size:.82rem;}
+.countdown-box{
+  background:white;padding:6px 9px;border-radius:999px;
+}
+.countdown-box span{font-weight:600;color:var(--accent2);}
+#countdownMsg{margin-top:6px;color:var(--muted);font-size:.8rem;}
+
+/* GALLERY */
+.media-grid{
+  display:grid;gap:10px;margin-top:10px;
+  grid-template-columns:repeat(2,1fr);
+}
+.media-item img{
+  width:100%;border-radius:15px;object-fit:cover;
+  box-shadow:0 10px 24px rgba(88,55,117,0.16);
+}
+
+/* 🌸 VIDEO SLIDER */
+.slider{
+  width:100%;
+  overflow:hidden;
+  border-radius:18px;
+  margin-top:12px;
+  position:relative;
+  box-shadow:0 14px 28px rgba(91,60,123,0.18);
+}
+.slide{
+  min-width:100%;
+  opacity:0;
+  transform:scale(.96);
+  transition:.7s ease-in-out;
+}
+.slide video{
+  width:100%;
+  border-radius:18px;
+  object-fit:cover;
+}
+.slide.active{
+  opacity:1;
+  transform:scale(1);
+}
+.dots{
+  margin-top:10px;text-align:center;
+}
+.dot{
+  width:9px;height:9px;background:#d8cbff;
+  border-radius:50%;display:inline-block;margin:0 4px;
+  transition:.35s;cursor:pointer;
+}
+.dot.active{
+  background:var(--accent2);
+  transform:scale(1.3);
+}
+
+/* BLOOM */
+#flower{
+  font-size:30px;opacity:0;transition:2s ease;transform-origin:center;
+}
+.flower-open{
+  transform:scale(3);opacity:1;animation:bounce .8s ease;
+}
+@keyframes bounce{
+  0%{transform:scale(1);}
+  45%{transform:scale(3.4);}
+  70%{transform:scale(2.6);}
+  100%{transform:scale(3);}
+}
+#bloomText{
+  opacity:0;margin-top:12px;transition:1.4s ease;
+  color:#b2417b;font-size:0.9rem;line-height:1.5;
+}
+
+/* SECRET */
+.btn-ghost{
+  padding:8px 14px;margin-top:10px;font-size:.8rem;
+  border-radius:999px;border:1px solid rgba(167,139,250,0.5);
+  background:transparent;color:var(--accent2);cursor:pointer;
+}
+.secret-text{
+  margin-top:8px;color:var(--accent2);display:none;font-size:.86rem;text-align:center;
+}
+
+/* FOOTER */
+.footer{
+  text-align:center;margin-top:30px;font-size:0.8rem;color:var(--muted);
+}
+
+@media(min-width:720px){
+  .media-grid{grid-template-columns:repeat(3,1fr);}
+}
+</style>
+</head>
+
+<body>
+
+<!-- Music -->
+<audio id="bgMusic" loop><source src="music1.mp3"></audio>
+
+<div id="floatLayer"></div>
+
+<!-- INTRO -->
+<div id="startOverlay" class="overlay">
+  <div class="overlay-card">
+    <div class="overlay-title">Princess Day 👑💜</div>
+    <p class="overlay-sub" id="introLine">
+      Loading sparkles…💫<br>Activating princess energy…💜<br><br>
+      Preparing lavender entrance✨
+    </p>
+    <button id="enterBtn" class="btn-primary" style="opacity:0;">Enter Your Kingdom 👑</button>
+    <p id="princessNote" class="overlay-note" style="opacity:0;">Yes… today is about you.</p>
+  </div>
+</div>
+
+<main class="page">
+
+<!-- INTRO SCENE -->
+<section class="scene" data-scene>
+  <h1 class="hero-title">Hi Princess, Kulsum 👑💜</h1>
+  <p class="hero-sub">
+    You are softness in human form —  
+    the one who makes college feel lighter just by being there.
+  </p>
+  <div class="countdown-bar">
+    <div class="countdown">
+      <div class="countdown-box"><span id="days">--</span> days</div>
+      <div class="countdown-box"><span id="hours">--</span> hrs</div>
+      <div class="countdown-box"><span id="mins">--</span> min</div>
+      <div class="countdown-box"><span id="secs">--</span> sec</div>
+    </div>
+    <p id="countdownMsg"></p>
+  </div>
+</section>
+
+<!-- PHOTOS -->
+<section class="scene" data-scene>
+  <h3>📸 Tiny memories</h3>
+  <p class="hero-sub">Every picture isn’t just a moment…
+it’s a chapter from a fairytale where the princess is real. 💖👑
+.</p>
+  <div class="media-grid">
+    <div class="media-item"><img src="ku1.jpg"></div>
+    <div class="media-item"><img src="ku2.jpg"></div>
+    <div class="media-item"><img src="ku3.jpg"></div>
+    <div class="media-item"><img src="ku4.jpg"></div>
+  </div>
+</section>
+
+<!-- VIDEO SLIDER -->
+<section class="scene" data-scene>
+  <h3>🎞️ Moving moments</h3>
+  <p class="hero-sub">The type of clips we’ll miss one day.</p>
+
+  <div class="slider" id="slider">
+    <div class="slide"><video src="kul1.mp4" autoplay muted playsinline loop></video></div>
+    <div class="slide"><video src="kul2.mp4" autoplay muted playsinline loop></video></div>
+    <div class="slide"><video src="kul3.mp4" autoplay muted playsinline loop></video></div>
+  </div>
+
+  <div class="dots" id="dots"></div>
+</section>
+
+<!-- BLOOM -->
+<section class="scene" data-scene>
+  <h3>🌸 Your lavender era</h3>
+  <p class="hero-sub">Growing quietly. Softly. Beautifully.</p>
+
+  <div style="text-align:center;margin-top:10px;">
+    <div id="flower">🌱</div>
+    <p id="bloomText"></p>
+  </div>
+</section>
+
+<!-- LETTER -->
+<section class="scene" data-scene>
+  <h3>💌 A small letter</h3>
+  <p>When I met you, you were just another person in class.</p>
+  <p>Now? You’re someone I genuinely don’t want to lose.</p>
+  <p>Thank you for being soft, real, patient — and unintentionally funny.</p>
+
+  <button id="secretBtn" class="btn-ghost">Tap for a secret 🤫</button>
+  <p id="secretText" class="secret-text">
+    Even after college, new routines, new lives…  
+    you’ll still be someone my heart remembers. 💜
+  </p>
+</section>
+
+<p class="footer">Made with lavender energy & pure care 💐💜</p>
+</main>
+
+<script>
+const enterBtn=document.getElementById("enterBtn");
+const overlay=document.getElementById("startOverlay");
+const princessNote=document.getElementById("princessNote");
+const introLine=document.getElementById("introLine");
+const bgMusic=document.getElementById("bgMusic");
+
+/* intro animations */
+setTimeout(()=>introLine.innerHTML=`✨ Verified: Today is Princess Day ✨<br><br>The princess is: <strong>Kulsum 👑💜</strong>`,2600);
+setTimeout(()=>{enterBtn.style.opacity="1";princessNote.style.opacity="1";},3800);
+
+enterBtn.onclick=async()=>{
+ overlay.style.opacity="0";overlay.style.transition=".8s";
+ setTimeout(()=>overlay.remove(),900);
+ try{await bgMusic.play();}catch{}
+ startFloatingPetals();startCountdown();startSceneObserver();startBloom();initSlider();
+};
+
+/* floating emojis */
+function startFloatingPetals(){
+ const icons=["🌸","💗","💜","🌷","✨"];
+ setInterval(()=>{
+  const el=document.createElement("div");
+  el.className="float";el.textContent=icons[Math.floor(Math.random()*icons.length)];
+  el.style.left=Math.random()*100+"vw";
+  el.style.fontSize=(14+Math.random()*18)+"px";
+  el.style.animationDuration=(8+Math.random()*5)+"s";
+  document.getElementById("floatLayer").appendChild(el);
+  setTimeout(()=>el.remove(),12000);
+ },900);
+}
+
+/* countdown */
+function startCountdown(){
+ const target=new Date("2025-12-14");
+ const d=document.getElementById("days"),h=document.getElementById("hours"),
+       m=document.getElementById("mins"),s=document.getElementById("secs"),
+       msg=document.getElementById("countdownMsg");
+ setInterval(()=>{
+  const now=new Date(),diff=target-now;
+  if(diff<=0){msg.textContent="It's your day 💜🎂";return;}
+  d.textContent=Math.floor(diff/(1000*60*60*24));
+  h.textContent=Math.floor((diff/(1000*60*60))%24);
+  m.textContent=String(Math.floor((diff/(1000*60))%60)).padStart(2,"0");
+  s.textContent=String(Math.floor((diff/1000)%60)).padStart(2,"0");
+ },1000);
+}
+
+/* scene animation */
+function startSceneObserver(){
+ const scenes=document.querySelectorAll("[data-scene]");
+ const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add("visible");obs.unobserve(e.target);}});
+ },{threshold:0.2});
+ scenes.forEach(el=>obs.observe(el));
+}
+
+/* bloom animation */
+function startBloom(){
+ const flower=document.getElementById("flower");
+ const text=document.getElementById("bloomText");
+ flower.style.opacity="1";flower.textContent="🌷";
+ setTimeout(()=>{
+  flower.textContent="🌸";
+  flower.classList.add("flower-open");
+  text.innerHTML=`Growing softly.<br>Becoming someone beautiful.<br>Just like you. 🌸💜`;
+  text.style.opacity="1";
+ },2600);
+}
+
+/* secret */
+document.getElementById("secretBtn").onclick=()=>{
+ const t=document.getElementById("secretText");
+ t.style.display=t.style.display==="block"?"none":"block";
+};
+
+/* slider */
+function initSlider(){
+ const slides=document.querySelectorAll(".slide");
+ const dotsContainer=document.getElementById("dots");
+ let index=0;
+
+ slides.forEach((_,i)=>{
+  const dot=document.createElement("span");
+  dot.className="dot";
+  dot.onclick=()=>go(i);
+  dotsContainer.appendChild(dot);
+ });
+
+ const dots=document.querySelectorAll(".dot");
+
+ function show(i){
+  slides.forEach(s=>s.classList.remove("active"));
+  dots.forEach(d=>d.classList.remove("active"));
+  slides[i].classList.add("active");
+  dots[i].classList.add("active");
+ }
+
+ function next(){index=(index+1)%slides.length;show(index);}
+ function go(i){index=i;show(i);}
+ show(index);
+ setInterval(next,3500);
+}
+</script>
+</body>
+</html>
